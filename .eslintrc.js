@@ -19,6 +19,8 @@ module.exports = {
   ],
   plugins: ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
+    'import/extensions': 0,
+    'node/no-missing-import': 0,
     'import/no-extraneous-dependencies': [
       'error',
       {
