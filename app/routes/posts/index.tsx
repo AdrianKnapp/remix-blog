@@ -1,15 +1,17 @@
 import { json } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
+import PostsList from '~/components/PostsList';
 import { getPosts } from '~/models/post.server';
+import type { PostModel } from '~/types/common';
 
 type LoaderData = {
   // this is a handy way to say: "posts is whatever type getPosts resolves to"
-  posts: Awaited<ReturnType<typeof getPosts>>;
+  posts: PostModel[];
 };
 
 export const loader = async () => {
   return json<LoaderData>({
-    posts: await getPosts(),
+    posts: (await getPosts()) as unknown as PostModel[],
   });
 };
 
@@ -19,15 +21,7 @@ const Posts = () => {
   return (
     <main>
       <h1>Posts</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.slug}>
-            <Link to={post.slug} className="text-blue-600 underline">
-              {post.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <PostsList posts={posts} />
     </main>
   );
 };
