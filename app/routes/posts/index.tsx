@@ -1,11 +1,12 @@
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import invariant from 'tiny-invariant';
 import PostsList from '~/components/PostsList';
-import { getPosts } from '~/models/post.server';
+import { getPosts, createPost } from '~/models/post.server';
 import type { PostModel } from '~/types/common';
+import type { ActionFunction } from '@remix-run/node';
 
 type LoaderData = {
-  // this is a handy way to say: "posts is whatever type getPosts resolves to"
   posts: PostModel[];
 };
 
@@ -13,6 +14,22 @@ export const loader = async () => {
   return json<LoaderData>({
     posts: (await getPosts()) as unknown as PostModel[],
   });
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+
+  const title = formData.get('title');
+  const slug = formData.get('slug');
+  const markdown = formData.get('markdown');
+
+  invariant(typeof title === 'string', 'title must be a string');
+  invariant(typeof slug === 'string', 'slug must be a string');
+  invariant(typeof markdown === 'string', 'markdown must be a string');
+
+  await createPost({ title, slug, markdown });
+
+  return null;
 };
 
 const Posts = () => {
