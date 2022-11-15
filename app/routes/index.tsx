@@ -1,9 +1,14 @@
-const Index = () => {
+import { Link } from '@remix-run/react';
+
+const Home = () => {
   return (
     <div>
-      <h1 className="text-red-400 mt-6">Remix Blog</h1>
+      <h1>Wellcome to home</h1>
+      <Link to="posts">
+        <button type="button">Go to posts!</button>
+      </Link>
     </div>
   );
 };
 
-export default Index;
+export default Home;
