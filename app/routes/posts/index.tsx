@@ -2,7 +2,7 @@ import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import invariant from 'tiny-invariant';
 import PostsList from '~/components/PostsList';
-import { getPosts, createPost, editPost } from '~/models/post.server';
+import { getPosts, createPost, editPost, deletePost } from '~/models/post.server';
 import type { PostModel } from '~/types/common';
 import type { ActionFunction } from '@remix-run/node';
 
@@ -19,8 +19,8 @@ export const loader = async () => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
 
+  const intent = formData.get('intent');
   const slugToEdit = formData.get('slug-to-edit');
-  const formAction = formData.get('form-action');
   const title = formData.get('title');
   const slug = formData.get('slug');
   const markdown = formData.get('markdown');
@@ -30,12 +30,15 @@ export const action: ActionFunction = async ({ request }) => {
   invariant(typeof slug === 'string', 'slug must be a string');
   invariant(typeof markdown === 'string', 'markdown must be a string');
 
-  switch (formAction) {
+  switch (intent) {
     case 'create':
       await createPost({ title, slug, markdown });
       break;
-    case 'edit':
+    case 'update':
       await editPost(slugToEdit, { title, slug, markdown });
+      break;
+    case 'delete':
+      await deletePost(slugToEdit);
       break;
     default:
       break;
