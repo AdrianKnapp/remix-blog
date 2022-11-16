@@ -9,6 +9,7 @@ type PostsListProps = {
 
 const PostsList = ({ posts }: PostsListProps) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [activeModalPost, setActiveModalPost] = useState<PostModel | null>(null);
 
   const handleToggleModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -26,18 +27,31 @@ const PostsList = ({ posts }: PostsListProps) => {
               {post.title}
               <span className="text-gray-500 text-sm">{new Date(post.updatedAt).toLocaleDateString('pt-br')}</span>
             </Link>
-            <button type="button" className="underline cursor-pointer flex items-center" onClick={handleToggleModal}>
+            <button
+              type="button"
+              className="underline cursor-pointer flex items-center"
+              onClick={() => {
+                setActiveModalPost(post);
+                handleToggleModal();
+              }}
+            >
               Edit
             </button>
           </li>
         ))}
       </ul>
       <div>
-        <button type="button" onClick={handleToggleModal}>
+        <button
+          type="button"
+          onClick={() => {
+            setActiveModalPost(null);
+            handleToggleModal();
+          }}
+        >
           Create new post
         </button>
       </div>
-      <AdminModal isOpen={modalIsOpen} handleCloseModal={handleToggleModal} />
+      <AdminModal activeModalPost={activeModalPost} isOpen={modalIsOpen} handleCloseModal={handleToggleModal} />
     </>
   );
 };

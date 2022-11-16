@@ -19,6 +19,7 @@ module.exports = {
   ],
   plugins: ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
+    'react/require-default-props': 0,
     'jsx-a11y/label-has-associated-control': 0,
     'import/extensions': 0,
     'node/no-missing-import': 0,

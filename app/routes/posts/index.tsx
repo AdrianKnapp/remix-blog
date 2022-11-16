@@ -1,8 +1,8 @@
-import { json } from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import invariant from 'tiny-invariant';
 import PostsList from '~/components/PostsList';
-import { getPosts, createPost } from '~/models/post.server';
+import { getPosts, createPost, editPost } from '~/models/post.server';
 import type { PostModel } from '~/types/common';
 import type { ActionFunction } from '@remix-run/node';
 
@@ -19,17 +19,29 @@ export const loader = async () => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
 
+  const slugToEdit = formData.get('slug-to-edit');
+  const formAction = formData.get('form-action');
   const title = formData.get('title');
   const slug = formData.get('slug');
   const markdown = formData.get('markdown');
 
+  invariant(typeof slugToEdit === 'string', 'slug to edit must be a string');
   invariant(typeof title === 'string', 'title must be a string');
   invariant(typeof slug === 'string', 'slug must be a string');
   invariant(typeof markdown === 'string', 'markdown must be a string');
 
-  await createPost({ title, slug, markdown });
+  switch (formAction) {
+    case 'create':
+      await createPost({ title, slug, markdown });
+      break;
+    case 'edit':
+      await editPost(slugToEdit, { title, slug, markdown });
+      break;
+    default:
+      break;
+  }
 
-  return null;
+  return redirect('/posts');
 };
 
 const Posts = () => {

@@ -15,9 +15,9 @@ export async function createPost(post: Pick<Post, 'slug' | 'title' | 'markdown'>
   return prisma.post.create({ data: post });
 }
 
-export async function editPost(oldSlug: string, post: Pick<Post, 'slug' | 'title' | 'markdown'>) {
+export async function editPost(slug: string, post: Pick<Post, 'slug' | 'title' | 'markdown'>) {
   return prisma.post.update({
-    where: { slug: oldSlug },
+    where: { slug },
     data: post,
   });
 }
