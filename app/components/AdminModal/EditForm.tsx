@@ -10,7 +10,8 @@ type EditFormProps = {
 
 const EditForm = ({ handleCloseModal, activeModalPost }: EditFormProps) => {
   return (
-    <Form method="post" className="mt-6">
+    <Form method="post" className="flex flex-col gap-3">
+      <h1 className="text-center text-xl my-2">{activeModalPost ? `Edit post` : 'Create a new post'}</h1>
       <input type="hidden" name="form-action" value={activeModalPost ? 'edit' : 'create'} />
       <input type="hidden" name="slug-to-edit" value={activeModalPost?.slug} />
       <p>
@@ -30,7 +31,7 @@ const EditForm = ({ handleCloseModal, activeModalPost }: EditFormProps) => {
         <br />
         <textarea
           id="markdown"
-          rows={20}
+          rows={10}
           name="markdown"
           className={`${inputClassName} font-mono`}
           defaultValue={activeModalPost?.markdown}
