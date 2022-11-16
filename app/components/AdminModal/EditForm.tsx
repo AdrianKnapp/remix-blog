@@ -2,7 +2,11 @@ import { Form } from '@remix-run/react';
 
 const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg`;
 
-const EditForm = () => {
+type EditFormProps = {
+  handleCloseModal: () => void;
+};
+
+const EditForm = ({ handleCloseModal }: EditFormProps) => {
   return (
     <Form method="post" className="mt-6">
       <p>
@@ -26,6 +30,7 @@ const EditForm = () => {
         <button
           type="submit"
           className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
+          onClick={handleCloseModal}
         >
           Create Post
         </button>

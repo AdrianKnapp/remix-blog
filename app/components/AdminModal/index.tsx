@@ -36,7 +36,7 @@ const AdminModal = ({ isOpen, handleCloseModal }: AdminModalProps) => {
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div>
-                  <EditForm />
+                  <EditForm handleCloseModal={handleCloseModal} />
                 </div>
 
                 <div className="mt-4">

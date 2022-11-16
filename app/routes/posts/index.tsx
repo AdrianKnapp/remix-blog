@@ -36,8 +36,8 @@ const Posts = () => {
   const { posts } = useLoaderData() as unknown as LoaderData;
 
   return (
-    <main>
-      <h1>Posts</h1>
+    <main className="text-center">
+      <h1 className="my-4 font-bold text-xl">Posts</h1>
       <PostsList posts={posts} />
     </main>
   );
