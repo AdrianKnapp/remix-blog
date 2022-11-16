@@ -17,7 +17,7 @@ const EditForm = ({ handleCloseModal, activeModalPost }: EditFormProps) => {
 
   return (
     <Form method="post" className="flex flex-col gap-3">
-      <h1 className="text-center text-xl my-2">{activeModalPost ? `Edit post` : 'Create a new post'}</h1>
+      <h1 className="text-center text-xl my-2 font-bold">{activeModalPost ? `Edit post` : 'Create a new post'}</h1>
       <input type="hidden" name="slug-to-edit" value={activeModalPost?.slug} />
       <p>
         <label>

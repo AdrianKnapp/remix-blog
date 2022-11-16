@@ -21,8 +21,8 @@ const PostSlug = () => {
   const { post, html } = useLoaderData();
 
   return (
-    <main className="mx-auto max-w-4xl">
-      <h1 className="my-6 border-b-2 text-center text-3xl">{post.title}</h1>
+    <main className="mx-auto container px-4">
+      <h1 className="mb-6 border-b text-center font-bold text-xl py-4">{post.title}</h1>
       <div className="mt-2" dangerouslySetInnerHTML={{ __html: html }} />
     </main>
   );
